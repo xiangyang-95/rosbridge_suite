@@ -31,7 +31,7 @@
 # POSSIBILITY OF SUCH DAMAGE.
 
 from base64 import standard_b64decode, standard_b64encode
-from io import StringIO
+from io import StringIO, BytesIO
 from math import ceil, floor, sqrt
 
 from PIL import Image
@@ -46,10 +46,11 @@ def encode(string):
     while length < bytes_needed:
         string += "\n"
         length += 1
+    string = string.encode()
     i = Image.frombytes("RGB", (int(width), int(height)), string)
-    buff = StringIO()
-    i.save(buff, "png")
-    encoded = standard_b64encode(buff.getvalue())
+    with BytesIO() as buff:
+        i.save(buff, format="png")
+        encoded = standard_b64encode(buff.getvalue())
     return encoded
 
 
