@@ -37,7 +37,7 @@ import time
 
 import rclpy
 from rclpy.node import Node
-from rclpy.qos import DurabilityPolicy, QoSProfile
+from rclpy.qos import DurabilityPolicy, QoSProfile, ReliabilityPolicy
 from rosbridge_library.capabilities.advertise import Advertise
 from rosbridge_library.capabilities.advertise_service import AdvertiseService
 from rosbridge_library.capabilities.call_service import CallService
@@ -189,6 +189,7 @@ class RosbridgeWebsocketNode(Node):
         client_count_qos_profile = QoSProfile(
             depth=10,
             durability=DurabilityPolicy.TRANSIENT_LOCAL,
+            reliability=ReliabilityPolicy.BEST_EFFORT
         )
 
         RosbridgeWebSocket.client_count_pub = self.create_publisher(
