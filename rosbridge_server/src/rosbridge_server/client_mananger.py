@@ -33,7 +33,7 @@
 import threading
 
 from rclpy.clock import ROSClock
-from rclpy.qos import DurabilityPolicy, QoSProfile
+from rclpy.qos import DurabilityPolicy, QoSProfile, ReliabilityPolicy
 from std_msgs.msg import Int32
 
 from rosbridge_msgs.msg import ConnectedClient, ConnectedClients
@@ -44,6 +44,7 @@ class ClientManager:
         qos = QoSProfile(
             depth=1,
             durability=DurabilityPolicy.TRANSIENT_LOCAL,
+            reliability=ReliabilityPolicy.BEST_EFFORT
         )
 
         # Publisher for number of connected clients
