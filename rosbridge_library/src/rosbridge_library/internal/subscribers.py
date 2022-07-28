@@ -114,6 +114,7 @@ class MultiSubscriber:
             durability=DurabilityPolicy.VOLATILE,
             reliability=ReliabilityPolicy.BEST_EFFORT,
         )
+        self.qos = qos
         infos = node_handle.get_publishers_info_by_topic(topic)
 
         # Certain combinations of publisher and subscriber QoS parameters are
@@ -171,7 +172,7 @@ class MultiSubscriber:
             self.new_subscriptions.update({client_id: callback})
             if self.new_subscriber is None:
                 self.new_subscriber = self.node_handle.create_subscription(
-                    self.msg_class, self.topic, self._new_sub_callback, 10
+                    self.msg_class, self.topic, self._new_sub_callback, self.qos
                 )
 
     def unsubscribe(self, client_id):
