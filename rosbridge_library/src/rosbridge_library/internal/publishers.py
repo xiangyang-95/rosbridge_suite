@@ -34,7 +34,7 @@
 from threading import Timer
 
 from rclpy.duration import Duration
-from rclpy.qos import DurabilityPolicy, QoSProfile
+from rclpy.qos import DurabilityPolicy, QoSProfile, ReliabilityPolicy
 from rosbridge_library.internal import message_conversion, ros_loader
 from rosbridge_library.internal.message_conversion import msg_class_type_repr
 from rosbridge_library.internal.topics import (
@@ -103,9 +103,11 @@ class MultiPublisher:
         self.msg_class = msg_class
         # Adding a lifespan solves the problem of late-joining subscribers
         # without the need of a custom message publisher implementation.
+        
         publisher_qos = QoSProfile(
             depth=queue_size,
             durability=DurabilityPolicy.TRANSIENT_LOCAL,
+            reliability=ReliabilityPolicy.BEST_EFFORT,
         )
 
         # For latched clients, no lifespan has to be specified (i.e. latch forever).
