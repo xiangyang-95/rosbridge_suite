@@ -107,7 +107,7 @@ class MultiPublisher:
         publisher_qos = QoSProfile(
             depth=queue_size,
             durability=DurabilityPolicy.TRANSIENT_LOCAL,
-            reliability=ReliabilityPolicy.BEST_EFFORT,
+        #     reliability=ReliabilityPolicy.BEST_EFFORT,
         )
 
         # For latched clients, no lifespan has to be specified (i.e. latch forever).
